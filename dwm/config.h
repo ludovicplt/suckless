@@ -13,9 +13,9 @@ static const char *fonts[]          = { "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#1e1e1e";
 static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#F4800d";
+static const char col_gray3[]       = "#FF0000";
 static const char col_gray4[]       = "#1e1e1e";
-static const char col_cyan[]        = "#f4800d";
+static const char col_cyan[]        = "#FF0000";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -33,15 +33,15 @@ static const char *mutevolume[]	= { "/usr/bin/pactl", "set-sink-mute",   "0", "t
 #define webapp "firefox"
 static const char *youtube[] = { webapp, "youtube.com", NULL };
 static const char *github[] = { webapp, "github.com", NULL };
-static const char *suckless[] = { webapp, "suckless.org", NULL };
+static const char *suckless[] = { webapp, "intra.epitech.eu", NULL };
 
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
 
 static const Launcher launchers[] = {
 	/* command 	Name */
 	{ youtube,	"youtube" },
 	{ github,	"github" },
-	{ suckless,	"suckless" },
+	{ suckless,	"intra" },
 };
 
 static const Rule rules[] = {
@@ -53,6 +53,8 @@ static const Rule rules[] = {
 	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
 	{ "Firefox", NULL,     NULL,           0,	  0,          0,          -1,        -1 },
 	{ "St",      NULL,     NULL,           0,         0,          1,           0,        -1 },
+	{ "Postman Agent",      NULL,     NULL,           0,         1,          1,           0,        -1 },
+	{ "_Postman Agent",      NULL,     NULL,           0,         1,          1,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
@@ -115,7 +117,7 @@ static Key keys[] = {
 	{ 0,                      	XF86XK_AudioLowerVolume,   spawn, {.v = downvolume } },
 	{ 0,                       	XF86XK_AudioRaiseVolume,   spawn, {.v = upvolume   } },
 	{ 0,                       	XF86XK_AudioMute,   	   spawn, {.v = mutevolume } },
-	
+
 	TAGKEYS(                        XK_ampersand,              0)
 	TAGKEYS(                        XK_eacute,                 1)
 	TAGKEYS(                        XK_quotedbl,               2)

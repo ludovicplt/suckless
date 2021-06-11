@@ -11,7 +11,7 @@ download_package()
 	which pacman > /dev/null 2>&1 && { sudo pacman -S $DEPENDENCIES; return; }
 	which dnf > /dev/null 2>&1 && { sudo dnf install $DEPENDENCIES; return; }
 	echo "Did not found your package manager to check the dependencies"
-}  
+}
 
 check_essential()
 {
@@ -39,7 +39,7 @@ check_optional()
 		echo "WARNING : You do not have feh installed"
 		echo "You may experience unexpected behaviour"
 	fi
-		
+
 	if [ ! -f "/usr/bin/ffmpeg" ]; then
 		echo "WARNING : You do not have ffmpeg installed"
 		echo "You may experience unexpected behaviour"
@@ -77,7 +77,7 @@ main()
 {
 	download_package
 	check_essential
-	check_optional
+	check_optional -f
 	build
 	create_xinitrc
 }

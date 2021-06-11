@@ -13,6 +13,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 #include <sys/ioctl.h>
 #include <sys/stat.h>
@@ -73,6 +74,8 @@ static char *kernel_release(void);
 static void set_status(const char *str);
 static void sighandler(const int signo);
 static void usage(void);
+static char *brightness_perc(const char *device_name);
+static char *charging_indicator(const char *adaptator);
 
 char *argv0;
 char concat[];
@@ -106,6 +109,49 @@ smprintf(const char *fmt, ...)
 	return ret;
 }
 
+static char *charging_indicator(const char *adaptator)
+{
+    FILE *file;
+    Bool is_plugged;
+
+    ccat(3, "/sys/class/power_supply/", adaptator, "/online");
+    file = fopen(concat, "r");
+    if (file == NULL) {
+        warn("Failed to open %s", concat);
+    }
+    fscanf(file, "%i", &is_plugged);
+    fclose(file);
+    if (is_plugged == True) {
+        return (smprintf("Charging"));
+    } else {
+        return (smprintf("Discharging"));
+    }
+}
+
+static char *brightness_perc(const char *device_name)
+{
+    FILE *file_one;
+    int actual;
+    int maxi;
+
+    ccat(3, "/sys/class/backlight/", device_name, "/brightness");
+    file_one = fopen(concat, "r");
+    if (file_one == NULL) {
+        warn("Failed to open file %s", concat);
+    }
+    fscanf(file_one, "%i", &actual);
+    fclose(file_one);
+    ccat(3, "/sys/class/backlight/", device_name, "/max_brightness");
+    file_one = fopen(concat, "r");
+    if (file_one == NULL) {
+        warn("Failed to open file %s", concat);
+    }
+    fscanf(file_one, "%i", &maxi);
+    fclose(file_one);
+    actual = (actual * 100) / maxi;
+    return smprintf("%d%%", actual);
+}
+
 static char *
 battery_perc(const char *bat)
 {
@@ -120,8 +166,11 @@ battery_perc(const char *bat)
 	}
 	fscanf(fp, "%i", &perc);
 	fclose(fp);
+    char *arg[2] = {"-e", "cmatrix"};
 
-	return smprintf("%d%%", perc);
+    if (perc == 10)
+        execv("/usr/local/bin/st", arg);
+    return smprintf("%d%%", perc);
 }
 
 static char *

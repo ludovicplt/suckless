@@ -10,7 +10,7 @@ install:
 	@echo copying desktop file to /usr/share/xsessions/
 	@mkdir -p /usr/share/xsessions/
 	@cp -f ${INI} /usr/share/xsessions/
-	@chmod 544 /usr/share/xsessions/${INI} 
+	@chmod 544 /usr/share/xsessions/${INI}
 
 uninstall:
 	@echo removing executable file from ${DESTDIR}${PREFIX}/bin

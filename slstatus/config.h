@@ -39,8 +39,12 @@
 - wifi_essid (wifi essid) [argument: wifi card interface name] */
 static const struct arg args[] = {
 	/* function	format        argument */
+    { vol_perc, " VOL %3s |", "card1"},
+    { brightness_perc, " BR %3s | ", "intel_backlight"},
 	{ disk_free, "DISK FREE %2sGB | ", "/" },
+    { cpu_perc, "CPU %3s | ", NULL},
 	{ ram_perc, "RAM %3s | ", NULL },
-	{ battery_perc, "BAT %s ", "BAT0" },
-	{ datetime, "%s | Version : Helife suckeless 0.9.5b",     "%F %T" },
+	{ battery_perc, "BAT %s ", "BAT1" },
+    { charging_indicator, "| %s |", "ADP1"},
+	{ datetime, " %s ",     "%F %T" },
 };

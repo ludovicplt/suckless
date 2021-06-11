@@ -539,7 +539,7 @@ buttonpress(XEvent *e)
 		XAllowEvents(dpy, ReplayPointer, CurrentTime);
 		click = ClkClientWin;
 	}
-	
+
 execute_handler:
 
 	for (i = 0; i < LENGTH(buttons); i++)
